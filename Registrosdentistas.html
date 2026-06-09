@@ -23,7 +23,6 @@
   table tr:nth-child(even) { background-color: #f9fbfd; }
   footer { padding: 10px; text-align: center; background-color:#9900cc; color: white; clear: both; }
 
-  /* Estilos integrados para el menú completo de edición de dentistas */
   .fila-edicion { background-color: #fdfaf2 !important; }
   .contenedor-edicion { padding: 20px; background-color: #f5edf9; border: 2px solid #5f016b; border-radius: 8px; margin: 5px 0; }
   .grid-edicion { display: flex; flex-wrap: wrap; gap: 15px; }
@@ -75,13 +74,10 @@
 </section>
 
 <script>
-  // Arreglo global para almacenar los datos frescos del servidor
   let dentistasCargados = [];
 
   async function cargarTablaDentistas() {
     try {
-      // Agregamos un parámetro de tiempo (?_=${new Date().getTime()}) para reventar la caché del navegador
-      // y obligarlo a ir a MongoDB Atlas a traer los datos reales en tiempo real.
       const respuesta = await fetch(`/api/dentistas?_=${new Date().getTime()}`, {
           headers: {
               'Cache-Control': 'no-cache',
@@ -92,7 +88,6 @@
       dentistasCargados = await respuesta.json();
       const tbody = document.getElementById("tablaDentistasBody");
       
-      // LIMPIEZA TOTAL: Vaciamos la tabla por completo antes de pintar para que no duplique ni use datos viejos
       tbody.innerHTML = "";
 
       dentistasCargados.forEach(doctor => {
@@ -207,7 +202,6 @@
           const resultado = await respuesta.json();
           alert(resultado.mensaje || "Dentista actualizado correctamente");
           
-          // Forzamos la recarga limpia de la tabla borrando el estado anterior
           await cargarTablaDentistas();
       } catch (error) {
           alert("Error al actualizar al dentista");
