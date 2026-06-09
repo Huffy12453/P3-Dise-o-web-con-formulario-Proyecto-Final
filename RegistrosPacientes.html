@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>DENTISTA BIG MOUTH - Tabla Pacientes</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Playwrite NZ Guides", cursive; font-weight: 400; font-style: normal; }
+  .header { position: relative; text-align: center; padding: 100px; background-color: #1c47a3; color: white; font-size: 20px; }
+  .logo { position: absolute; left: 40px; top: 50%; transform: translateY(-50%); height: 200px; }
+  h1 { margin: 0; }
+  nav { display: flex; float: left; width: 15%; height: 82vh; background: #5f016b; padding: 20px; font-size: 30px; align-items: center; justify-content: center; }
+  nav ol { list-style-type: none; padding: 0; margin: 0; }
+  nav li { margin-bottom: 18px; }
+  .button1 { border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #843df5; background-color: #8dcbf5; cursor: pointer; width: 100%; }
+  .btn-edit { background-color: #ffc107; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+  .btn-delete { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+  article { float: left; padding: 20px; width: 85%; background-color: #ffffff; font-size: 16px; }
+  table th, table td { padding: 10px; border: 1px solid #e0e0e0; text-align: left; }
+  table tr:nth-child(even) { background-color: #f9fbfd; }
+  footer { padding: 10px; text-align: center; background-color:#9900cc; color: white; clear: both; }
+
+  /* Estilos integrados para el menú completo de edición de pacientes */
+  .fila-edicion { background-color: #fdfaf2 !important; }
+  .contenedor-edicion { padding: 20px; background-color: #f5edf9; border: 2px solid #5f016b; border-radius: 8px; margin: 5px 0; }
+  .grid-edicion { display: flex; flex-wrap: wrap; gap: 15px; }
+  .campo-edicion { display: flex; flex-direction: column; flex: 1 1 200px; }
+  .campo-edicion label { font-weight: bold; margin-bottom: 5px; color: #5f016b; font-size: 14px; }
+  .campo-edicion input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+  .campo-edicion input:focus { border-color: #5f016b; outline: none; box-shadow: 0 0 5px rgba(95, 1, 107, 0.3); }
+  .btn-guardar { background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+  .btn-cancelar { background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="Logoo.jpg" alt="Logo Dentista Big Mouth" class="logo">
+  <h1>Dentista Big Mouth</h1>
+  <p> Aquí atendemos hasta a los dragones 🔥</p>
+</header>
+
+<section>
+  <nav>
+    <ol>
+      <li><button class="button1"><a href="index.html" style="text-decoration:none; color:inherit;">Inicio</a></button></li>
+      <li><button class="button1"><a href="Cuestionario.html" style="text-decoration:none; color:inherit;">Añadir Paciente</a></button></li>
+    </ol>
+  </nav>
+  
+  <article>
+    <div style="margin-top: 40px; overflow-x: auto;">
+        <h3>Listado Oficial de Pacientes</h3>
+        <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+          <thead>
+            <tr style="background-color: #5f016b; color: white;">
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Género</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>RFC</th>
+              <th>Alergias</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPacientesBody"></tbody>
+        </table>
+      </div>
+    </article>
+</section>
+
+<script>
+    let pacientesCargados = [];
+
+    async function cargarTablaPacientes() {
+      try {
+        const respuesta = await fetch('/api/pacientes');
+        pacientesCargados = await respuesta.json();
+        const tbody = document.getElementById("tablaPacientesBody");
+        tbody.innerHTML = "";
+  
+        pacientesCargados.forEach(paciente => {
+          const fila = document.createElement("tr");
+          fila.id = `fila-${paciente.ID}`;
+          fila.innerHTML = `
+            <td>${paciente.ID || ''}</td>
+            <td>${paciente.Nombre || ''}</td>
+            <td>${paciente.Edad || ''}</td>
+            <td>${paciente.Genero || ''}</td>
+            <td>${paciente.Telefono || ''}</td>
+            <td>${paciente.Correo || ''}</td>
+            <td>${paciente.RFC || ''}</td>
+            <td>${paciente.Alergias || ''}</td>
+            <td>
+              <button class="btn-edit" onclick="editarPaciente('${paciente.ID}')">✏️</button>
+              <button class="btn-delete" onclick="eliminarPaciente('${paciente.ID}')">🗑️</button>
+            </td>
+          `;
+          tbody.appendChild(fila);
+        });
+      } catch (error) {
+        console.error("Error al cargar la tabla de pacientes:", error);
+      }
+    }
+
+    function editarPaciente(id) {
+        const menuExistente = document.getElementById(`menu-edit-${id}`);
+        if (menuExistente) {
+            menuExistente.remove();
+            return;
+        }
+
+        document.querySelectorAll('.fila-edicion').forEach(el => el.remove());
+
+        const paciente = pacientesCargados.find(p => String(p.ID) === String(id));
+        if (!paciente) return;
+
+        const filaOriginal = document.getElementById(`fila-${id}`);
+        const filaMenu = document.createElement("tr");
+        filaMenu.id = `menu-edit-${id}`;
+        filaMenu.className = "fila-edicion";
+        
+        filaMenu.innerHTML = `
+            <td colspan="9">
+                <div class="contenedor-edicion">
+                    <h4 style="margin: 0 0 15px 0; color: #5f016b; font-weight: bold;">📝 Modificar Registro de Paciente (ID: ${id})</h4>
+                    <div class="grid-edicion">
+                        <div class="campo-edicion">
+                            <label>Nombre:</label>
+                            <input type="text" id="edit-nombre-${id}" value="${paciente.Nombre || ''}">
+                        </div>
+                        <div class="campo-edicion">
+                            <label>Edad:</label>
+                            <input type="text" id="edit-edad-${id}" value="${paciente.Edad || ''}">
+                        </div>
+                        <div class="campo-edicion">
+                            <label>Género:</label>
+                            <input type="text" id="edit-genero-${id}" value="${paciente.Genero || ''}">
+                        </div>
+                        <div class="campo-edicion">
+                            <label>Teléfono:</label>
+                            <input type="text" id="edit-telefono-${id}" value="${paciente.Telefono || ''}">
+                        </div>
+                        <div class="campo-edicion">
+                            <label>Correo:</label>
+                            <input type="text" id="edit-correo-${id}" value="${paciente.Correo || ''}">
+                        </div>
+                        <div class="campo-edicion">
+                            <label>RFC:</label>
+                            <input type="text" id="edit-rfc-${id}" value="${paciente.RFC || ''}">
+                        </div>
+                        <div class="campo-edicion">
+                            <label>Alergias:</label>
+                            <input type="text" id="edit-alergias-${id}" value="${paciente.Alergias || ''}">
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button class="btn-guardar" onclick="guardarCambiosPaciente('${id}')">Guardar Cambios</button>
+                        <button class="btn-cancelar" onclick="document.getElementById('menu-edit-${id}').remove()">Cancelar</button>
+                    </div>
+                </div>
+            </td>
+        `;
+
+        filaOriginal.parentNode.insertBefore(filaMenu, filaOriginal.nextSibling);
+    }
+
+    async function guardarCambiosPaciente(id) {
+        const datosActualizados = {
+            Nombre: document.getElementById(`edit-nombre-${id}`).value,
+            Edad: document.getElementById(`edit-edad-${id}`).value,
+            Genero: document.getElementById(`edit-genero-${id}`).value,
+            Telefono: document.getElementById(`edit-telefono-${id}`).value,
+            Correo: document.getElementById(`edit-correo-${id}`).value,
+            RFC: document.getElementById(`edit-rfc-${id}`).value,
+            Alergias: document.getElementById(`edit-alergias-${id}`).value
+        };
+
+        try {
+            const respuesta = await fetch(`/api/pacientes/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosActualizados)
+            });
+            const resultado = await respuesta.json();
+            alert(resultado.mensaje || "Paciente actualizado correctamente");
+            cargarTablaPacientes(); 
+        } catch (error) {
+            alert("Error al actualizar el registro");
+        }
+    }
+
+    async function eliminarPaciente(id) {
+        if (!confirm("¿Seguro que deseas eliminar este paciente?")) return;
+        try {
+            const respuesta = await fetch(`/api/pacientes/${id}`, { method: 'DELETE' });
+            const resultado = await respuesta.json();
+            alert(resultado.mensaje);
+            cargarTablaPacientes();
+        } catch (error) {
+            alert("Error al eliminar");
+        }
+    }
+  
+    window.addEventListener('DOMContentLoaded', cargarTablaPacientes);
+</script>
+
+<footer>
+  <p>  | Muñiz Garcia Manuel Hector 4-I |  </p> 
+  <p> | Num control: 0601  |  </p>
+  <p> | 4to semestre - Programacion |  </p> 
+  <p> | Bases de Datos No Relacionales |  </p>
+</footer>
+</body>
+</html>

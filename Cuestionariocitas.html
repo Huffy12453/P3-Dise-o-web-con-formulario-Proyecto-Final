@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>DENTISTA BIG MOUTH - Registrar Cita</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<style>
+
+body {
+  font-family: "Playwrite NZ Guides", cursive;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  background-color: #ffffff;
+}
+
+.button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button1 {
+  border-radius: 12px; 
+  font-size: 15px; 
+  padding: 10px 20px; 
+  border: 2px dashed #843df5; 
+  background-color: #8dcbf5;
+  cursor: pointer;
+}
+
+.header {
+  position: relative; 
+  text-align: center; 
+  padding: 100px;
+  background: #1c47a3;
+  color: white;
+  font-size: 20px;
+}
+
+.logo {
+  position: absolute;
+  left: 40px;         
+  top: 50%;           
+  transform: translateY(-50%); 
+  height: 200px;       
+}
+
+h1 {
+  margin: 0; 
+}
+
+nav { 
+  display: flex;
+  float: left;
+  width: 15%;
+  height: 90vh;
+  background-color: #5f016b;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-sizing: border-box;
+}
+
+nav ol {
+  list-style-type: none; 
+  padding: 0;            
+  margin: 0;
+}
+
+article {
+  float: left;
+  padding: 30px;
+  width: 85%;
+  background-color: #ffffff;
+  position: relative; 
+  font-size: 20px;
+  box-sizing: border-box;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+  background-color:#9900cc;
+  color: white;
+  clear: both; 
+}
+
+article form {
+  border: 2px dashed #5f016b;
+  border-radius: 12px;
+  padding: 30px;
+  background-color: #fff;
+  margin-top: 15px;
+}
+
+article label {
+  display: block;
+  margin-bottom: 8px;
+  color: #5f016b;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+article input, article select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c9b0e8;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+  font-family: inherit;
+}
+
+article input:focus, article select:focus {
+  outline: none;
+  border-color: #5f016b;
+}
+
+article button[type="submit"] {
+  background-color: #5f016b;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="Logoo.jpg" alt="Logo Dentista Big Mouth" class="logo">
+  <h1>Dentista Big Mouth</h1>
+  <p> Aqui atendemos hasta a los dragones 🔥</p>
+</header>
+
+<section>
+<nav>
+  <ol>
+    <li>
+      <button class="button1"><a href="RegistrosCitas.html" style="text-decoration: none; color: inherit;">Regresar al registro de Citas</a></button>
+    </li>
+  </ol>
+</nav>
+
+  <article>
+    <p style="font-size: 16px; margin-top: 0;">Completa los campos para añadir un nuevo documento a la colección:</p>
+    
+    <form onsubmit="agregarcitas(event)">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        
+        <div>
+            <label>IDcita</label>
+            <input type="text" id="IDcita" name="IDcitas" placeholder="ej. C-01" required>
+        </div>
+        <div>
+          <label>Fecha</label>
+          <input type="text" id="Fecha" name="Fecha" placeholder="ej. 15-octubre" required>
+        </div>
+
+        <div>
+          <label>IDentista</label>
+          <input type="text" id="IDentista" name="Dentista" placeholder="Ej. D-11" required>
+        </div>
+
+        <div>
+          <label>Estatus</label>
+          <select id="Estatus" name="Estatus cita" required>
+            <option value="" disabled selected>Selecciona el estado actual</option>
+            <option value="Finalizada">Finalizada</option>
+            <option value="Cancelada">Cancelada</option>
+            <option value="En sala de espera">En sala de espera</option>
+            <option value="Confirmada">Confirmada</option>
+            <option value="En curso">En curso</option>
+            <option value="Ausente">Ausente</option>
+          </select>
+        </div>
+
+        <div>
+          <label>IDPaciente</label>
+          <input type="text" id="IDPaciente" name="ID Paciente" placeholder="ej. 11" required>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Motivo</label>
+          <input type="text" id="Motivo" name="Motivo" placeholder="Motivo de consulta (ej. Limpieza, Brackets, Extracción)" required>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <button type="submit">Guardar Registro de Cita</button>
+        </div>
+
+      </div>
+    </form>
+    
+    <div id="listacitas" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;"></div>
+  </article>
+</section>
+
+<script>
+    async function agregarcitas(e){
+      e.preventDefault(); 
+
+      let IDcita = document.getElementById("IDcita").value;
+      let Fecha = document.getElementById("Fecha").value;
+      let IDentista = document.getElementById("IDentista").value;
+      let Estatus = document.getElementById("Estatus").value;
+      let IDPaciente = document.getElementById("IDPaciente").value; 
+      let Motivo = document.getElementById("Motivo").value;
+  
+      if(IDcita === "" || Fecha === "" || IDentista === "" || Estatus === "" || IDPaciente === "" || Motivo === ""){
+          alert("Por favor llene todos los campos");
+          return;
+      }
+  
+      const datosCita = { 
+        IDcitas: IDcita, 
+        Fecha, 
+        IDentista, 
+        Estatus, 
+        IDPaciente, 
+        Motivo 
+      };
+  
+      try {
+          const respuesta = await fetch('http://localhost:5000/api/citas', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(datosCita)
+          });
+          
+          const resultado = await respuesta.json();
+  
+          if (respuesta.ok) {
+              let nuevaCard = document.createElement('div');
+              nuevaCard.classList.add('card');
+              nuevaCard.style = "border: 1px solid #5f016b; padding: 15px; border-radius: 8px; background: #f9f9f9;";
+              
+              nuevaCard.innerHTML = `
+                  <h2 style="margin-top:0; color:#5f016b;">ID: ${IDcita}</h2>
+                  <p><strong>IDPaciente:</strong> ${IDPaciente}</p>
+                  <p><strong>Fecha:</strong> ${Fecha}</p>
+                  <p><strong>Dentista:</strong> ${IDentista}</p>
+                  <p><strong>Estado:</strong> ${Estatus}</p>
+                  <p><strong>Motivo:</strong> ${Motivo}</p>
+              `;
+              document.getElementById("listacitas").appendChild(nuevaCard);
+              
+              document.getElementById("IDcita").value = "";
+              document.getElementById("Fecha").value = "";
+              document.getElementById("IDentista").value = "";
+              document.getElementById("Estatus").value = "";
+              document.getElementById("IDPaciente").value = "";
+              document.getElementById("Motivo").value = "";
+  
+              alert("✅ " + resultado.mensaje);
+          } else {
+              alert("No se pudo guardar la cita: " + (resultado.error || "Error desconocido"));
+          }
+      } catch (error) {
+          console.error("Error:", error);
+          alert("❌ Error de conexión con el servidor");
+      }
+    }
+</script>
+<footer>
+  <p>  | Muñiz Garcia Manuel Hector 4-I |  </p> 
+  <p> | Num control: 0601  |  </p>
+  <p> | 4to semestre - Programacion |  </p> 
+  <p> | Bases de Datos No Relacionales |  </p>
+</footer>
+
+</body>
+</html>

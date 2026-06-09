@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>DENTISTA BIG MOUTH</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<style>
+
+
+body {
+  font-family: "Playwrite NZ Guides", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button1 {border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #843df5; background-color: #8dcbf5;}
+.button2 {border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #8f4ef8; background-color: #8dcbf5;}
+.button3 {border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #985df7; background-color: #8dcbf5;}
+
+
+.header {
+  position: relative; 
+  text-align: center; 
+  padding: 100px;
+  background: #1c47a3;
+  color: white;
+  font-size: 20px;
+}
+
+.logo {
+  position: absolute;
+  left: 40px;         
+  top: 50%;           
+  transform: translateY(-50%); 
+  height: 200px;       
+}
+
+h1 {
+  margin: 0; 
+}
+
+nav { display: flex;
+  float: left;
+  width: 10%;
+  height: 40vh;
+  background-color: #5f016b;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+nav ol {
+  list-style-type: none; 
+  padding: 0;            
+  margin: 0;
+}
+
+nav li {
+  margin-bottom: 18px;   
+}
+
+nav .w3-button {
+  width: 100%;
+  height: 60px;
+  font-weight: bold;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 85%;
+  background-color: #ffffff;
+  position: relative; 
+  font-size: 20px;
+}
+
+.imagen-derecha-fija {
+  position: absolute;
+  top: 20px;  
+  right: 40px;  
+  width: 250px; 
+  height: auto;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+  background-color:#9900cc;
+  color: white;
+  clear: both; 
+}
+
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+
+</style>
+</head>
+<body>
+<header class="header">
+  <img src="Logoo.jpg" alt="Logo Dentista Big Mouth" class="logo">
+  <h1>Dentista Big Mouth</h1>
+  <p> Aqui atendemos hasta a los dragones 🔥</p>
+</header>
+<section>
+<nav>
+  <ol>
+    <li>
+      <button class="button1"><a href="RegistrosPacientes.html">Pacientes</a></button>
+    </li>
+    <li>
+      <button class="button2"><a href="Registrosdentistas.html">Doctores</a></button>
+    </li>
+    <li>
+      <button class="button2"><a href="RegistrosCitas.html">Citas</a></button>
+    </li>
+    <li>
+      <button class="button3"><a href="Info.html">Informacion</a></button>
+    </li>
+  </ol>
+</nav>
+  <article>
+    <h2><font color="purple">¡Bienvenidos a nuestra pagina web!</font></h2>
+    <h1><font color="purple">Una pequeña informacion sobre nuestro dentista Big Mouth.</font></h1>
+    <p>Aqui, volvemos tu boca a su estado original, si, como desde estabas bebe :D</p>
+    <p>Con una de las mejores tecnologias en el mercado, podras tener una mejor experiencia en nuestro servicio</p>
+    <p>Nuestros destintas te atenderan con mucho gusto y te ayudaran</p>
+    <p>Solo llama a el doctor que te interese y haz tu cita!</p>
+    <img src="pibble.jpg" class="imagen-derecha-fija" alt="perro">
+  </article>
+</section>
+
+<footer>
+  <p>  | Muñiz Garcia Manuel Hector 4-I |  </p> 
+  <p> | Num control: 0601  |  </p>
+  <p> | 4to semestre - Programacion |  </p> 
+  <p> | Bases de Datos No Relacionales |  </p>
+</footer>
+
+</body>
+</html>

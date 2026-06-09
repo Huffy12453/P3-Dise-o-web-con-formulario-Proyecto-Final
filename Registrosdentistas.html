@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>DENTISTA BIG MOUTH - Tabla Dentistas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Playwrite NZ Guides", cursive; font-weight: 400; font-style: normal; margin: 0;}
+  .header { position: relative; text-align: center; padding: 100px; background-color: #1c47a3; color: white; font-size: 20px; }
+  .logo { position: absolute; left: 40px; top: 50%; transform: translateY(-50%); height: 200px; }
+  h1 { margin: 0; }
+  nav { display: flex; float: left; width: 15%; height: 82vh; background: #5f016b; padding: 20px; font-size: 30px; align-items: center; justify-content: center; }
+  nav ol { list-style-type: none; padding: 0; margin: 0; }
+  nav li { margin-bottom: 18px; }
+  .button1 { border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #843df5; background-color: #8dcbf5; cursor: pointer; width: 100%; }
+  .btn-edit { background-color: #ffc107; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+  .btn-delete { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+  article { float: left; padding: 20px; width: 85%; background-color: #ffffff; font-size: 16px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  table th, table td { padding: 10px; border: 1px solid #e0e0e0; text-align: left; }
+  table tr:nth-child(even) { background-color: #f9fbfd; }
+  footer { padding: 10px; text-align: center; background-color:#9900cc; color: white; clear: both; }
+
+  /* Estilos integrados para el menú completo de edición de dentistas */
+  .fila-edicion { background-color: #fdfaf2 !important; }
+  .contenedor-edicion { padding: 20px; background-color: #f5edf9; border: 2px solid #5f016b; border-radius: 8px; margin: 5px 0; }
+  .grid-edicion { display: flex; flex-wrap: wrap; gap: 15px; }
+  .campo-edicion { display: flex; flex-direction: column; flex: 1 1 200px; }
+  .campo-edicion label { font-weight: bold; margin-bottom: 5px; color: #5f016b; font-size: 14px; }
+  .campo-edicion input, .campo-edicion select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; }
+  .campo-edicion input:focus, .campo-edicion select:focus { border-color: #5f016b; outline: none; box-shadow: 0 0 5px rgba(95, 1, 107, 0.3); }
+  .btn-guardar { background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+  .btn-cancelar { background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="Logoo.jpg" alt="Logo Dentista Big Mouth" class="logo">
+  <h1>Dentista Big Mouth</h1>
+  <p> Aquí atendemos hasta a los dragones 🔥</p>
+</header>
+
+<section>
+  <nav>
+    <ol>
+      <li><button class="button1"><a href="index.html" style="text-decoration:none; color:inherit;">Inicio</a></button></li>
+      <li><button class="button1"><a href="Cuestionariodentistas.html" style="text-decoration:none; color:inherit;">Añadir Dentista</a></button></li>
+    </ol>
+  </nav>
+  
+  <article>
+    <div style="margin-top: 40px; overflow-x: auto;">
+        <h3>Listado Oficial de Dentistas</h3>
+        <table>
+          <thead>
+            <tr style="background-color: #5f016b; color: white;">
+              <th>ID Dentista</th>
+              <th>Nombre</th>
+              <th>Género</th>
+              <th>CEP</th>
+              <th>Especialidad</th>
+              <th>Horario</th>
+              <th>Días Laborales</th>
+              <th>Teléfono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaDentistasBody"></tbody>
+        </table>
+      </div>
+    </article>
+</section>
+
+<script>
+  // Arreglo global para almacenar los datos frescos del servidor
+  let dentistasCargados = [];
+
+  async function cargarTablaDentistas() {
+    try {
+      // Agregamos un parámetro de tiempo (?_=${new Date().getTime()}) para reventar la caché del navegador
+      // y obligarlo a ir a MongoDB Atlas a traer los datos reales en tiempo real.
+      const respuesta = await fetch(`/api/dentistas?_=${new Date().getTime()}`, {
+          headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache'
+          }
+      });
+      
+      dentistasCargados = await respuesta.json();
+      const tbody = document.getElementById("tablaDentistasBody");
+      
+      // LIMPIEZA TOTAL: Vaciamos la tabla por completo antes de pintar para que no duplique ni use datos viejos
+      tbody.innerHTML = "";
+
+      dentistasCargados.forEach(doctor => {
+        const idReal = doctor.IDentista || doctor.ID || doctor.id || doctor._id;
+
+        const fila = document.createElement("tr");
+        fila.id = `fila-${idReal}`;
+        fila.innerHTML = `
+          <td><strong>${idReal || ''}</strong></td>
+          <td>${doctor.Nombre || doctor.nombre || ''}</td>
+          <td>${doctor.Genero || doctor.genero || ''}</td>
+          <td>${doctor.CEP || doctor.cep || ''}</td>
+          <td>${doctor.Especialidad || doctor.especialidad || ''}</td>
+          <td>${doctor.Horario || doctor.horario || ''}</td>
+          <td>${doctor.DiasLaborales || doctor.diaslaborales || ''}</td>
+          <td>${doctor.Telefono || doctor.telefono || ''}</td>
+          <td>
+            <button class="btn-edit" onclick="editarDentista('${idReal}')">✏️</button>
+            <button class="btn-delete" onclick="eliminarDentista('${idReal}')">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(fila);
+      });
+    } catch (error) {
+      console.error("Error al cargar la tabla de dentistas:", error);
+    }
+  }
+
+  function editarDentista(id) {
+      const menuExistente = document.getElementById(`menu-edit-${id}`);
+      if (menuExistente) {
+          menuExistente.remove();
+          return;
+      }
+
+      document.querySelectorAll('.fila-edicion').forEach(el => el.remove());
+
+      const doctor = dentistasCargados.find(d => String(d.IDentista || d.ID || d.id || d._id) === String(id));
+      if (!doctor) return;
+
+      const filaOriginal = document.getElementById(`fila-${id}`);
+      const filaMenu = document.createElement("tr");
+      filaMenu.id = `menu-edit-${id}`;
+      filaMenu.className = "fila-edicion";
+      
+      filaMenu.innerHTML = `
+          <td colspan="9">
+              <div class="contenedor-edicion">
+                  <h4 style="margin: 0 0 15px 0; color: #5f016b; font-weight: bold;">📝 Modificar Registro de Dentista (ID: ${id})</h4>
+                  <div class="grid-edicion">
+                      <div class="campo-edicion">
+                          <label>Nombre:</label>
+                          <input type="text" id="edit-nombre-${id}" value="${doctor.Nombre || doctor.nombre || ''}">
+                      </div>
+                      <div class="campo-edicion">
+                          <label>Género:</label>
+                          <input type="text" id="edit-genero-${id}" value="${doctor.Genero || doctor.genero || ''}">
+                      </div>
+                      <div class="campo-edicion">
+                          <label>CEP:</label>
+                          <input type="text" id="edit-cep-${id}" value="${doctor.CEP || doctor.cep || ''}">
+                      </div>
+                      <div class="campo-edicion">
+                          <label>Especialidad:</label>
+                          <input type="text" id="edit-especialidad-${id}" value="${doctor.Especialidad || doctor.especialidad || ''}">
+                      </div>
+                      <div class="campo-edicion">
+                          <label>Horario:</label>
+                          <input type="text" id="edit-horario-${id}" value="${doctor.Horario || doctor.horario || ''}">
+                      </div>
+                      <div class="campo-edicion">
+                          <label>Días Laborales:</label>
+                          <input type="text" id="edit-dias-${id}" value="${doctor.DiasLaborales || doctor.diaslaborales || ''}">
+                      </div>
+                      <div class="campo-edicion">
+                          <label>Teléfono:</label>
+                          <input type="text" id="edit-telefono-${id}" value="${doctor.Telefono || doctor.telefono || ''}">
+                      </div>
+                  </div>
+                  <div style="margin-top: 20px; text-align: right;">
+                      <button class="btn-guardar" onclick="guardarCambiosDentista('${id}')">Guardar Cambios</button>
+                      <button class="btn-cancelar" onclick="document.getElementById('menu-edit-${id}').remove()">Cancelar</button>
+                  </div>
+              </div>
+          </td>
+      `;
+
+      filaOriginal.parentNode.insertBefore(filaMenu, filaOriginal.nextSibling);
+  }
+
+  async function guardarCambiosDentista(id) {
+      const vNombre = document.getElementById(`edit-nombre-${id}`).value;
+      const vGenero = document.getElementById(`edit-genero-${id}`).value;
+      const vCep = document.getElementById(`edit-cep-${id}`).value;
+      const vEspecialidad = document.getElementById(`edit-especialidad-${id}`).value;
+      const vHorario = document.getElementById(`edit-horario-${id}`).value;
+      const vDias = document.getElementById(`edit-dias-${id}`).value;
+      const vTelefono = document.getElementById(`edit-telefono-${id}`).value;
+
+      const datosActualizados = {
+          Nombre: vNombre, Genero: vGenero, CEP: vCep, Especialidad: vEspecialidad, Horario: vHorario, DiasLaborales: vDias, Telefono: vTelefono,
+          nombre: vNombre, genero: vGenero, cep: vCep, especialidad: vEspecialidad, horario: vHorario, diaslaborales: vDias, telefono: vTelefono
+      };
+
+      try {
+          const respuesta = await fetch(`/api/dentistas/${id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(datosActualizados)
+          });
+          
+          const resultado = await respuesta.json();
+          alert(resultado.mensaje || "Dentista actualizado correctamente");
+          
+          // Forzamos la recarga limpia de la tabla borrando el estado anterior
+          await cargarTablaDentistas();
+      } catch (error) {
+          alert("Error al actualizar al dentista");
+      }
+  }
+
+  async function eliminarDentista(id) {
+      if (!confirm("¿Seguro que deseas eliminar a este dentista?")) return;
+      try {
+          const respuesta = await fetch(`/api/dentistas/${id}`, { method: 'DELETE' });
+          const resultado = await respuesta.json();
+          alert(resultado.mensaje || "Dentista eliminado correctamente");
+          cargarTablaDentistas();
+      } catch (error) {
+          alert("Error al eliminar al dentista");
+      }
+  }
+
+  window.addEventListener('DOMContentLoaded', cargarTablaDentistas);
+</script>
+
+<footer>
+  <p>  | Muñiz Garcia Manuel Hector 4-I |  </p> 
+  <p> | Num control: 0601  |  </p>
+  <p> | 4to semestre - Programacion |  </p> 
+  <p> | Bases de Datos No Relacionales |  </p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>DENTISTA BIG MOUTH - Pacientes</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<style>
+
+body {
+  font-family: "Playwrite NZ Guides", cursive;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #f4f4f4;
+}
+
+.button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button1 {border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #843df5; background-color: #8dcbf5;}
+.button2 {border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #8f4ef8; background-color: #8dcbf5;}
+.button3 {border-radius: 12px; font-size: 15px; padding: 10px 20px; border: 2px dashed #985df7; background-color: #8dcbf5;}
+
+.header {
+  position: relative; 
+  text-align: center; 
+  padding: 100px;
+  background: #1c47a3;
+  color: white;
+  font-size: 20px;
+}
+
+.logo {
+  position: absolute;
+  left: 40px;         
+  top: 50%;           
+  transform: translateY(-50%); 
+  height: 200px;       
+}
+
+h1 {
+  margin: 0; 
+}
+
+nav { 
+  display: flex;
+  float: left;
+  width: 10%;
+  height: auto;
+  min-height: 97vh;
+  background-color: #5f016b;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+nav ol {
+  list-style-type: none; 
+  padding: 0;            
+  margin: 0;
+  width: 100%;
+}
+
+nav li {
+  margin-bottom: 18px;   
+}
+
+nav .w3-button {
+  width: 100%;
+  height: 60px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 85%;
+  background-color: #ffffff;
+  position: relative; 
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+  background-color:#9900cc;
+  color: white;
+  clear: both; 
+}
+
+article td {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  color: #333333;
+}
+
+article tr:nth-child(even) {
+  background-color: #f9fbfd;
+}
+
+article tr:hover {
+  background-color: #f1f5fc;
+}
+
+article form {
+  background-color: #f7f4f9;
+  padding: 25px;
+  border: 2px dashed #5f016b;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+article label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #5f016b;
+  font-size: 14px;
+}
+
+article label span {
+  font-size: 11px;
+  color: #8c8273;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+article input, article select, article textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #985df7;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #333;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  font-family: inherit;
+}
+
+article input:focus, article select:focus, article textarea:focus {
+  outline: none;
+  border-color: #1c47a3;
+  background-color: #fcfdfe;
+}
+
+article button[type="submit"] {
+  background-color: #5f016b;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+article button[type="submit"]:hover {
+  background-color: #9900cc;
+}
+
+.card {
+  background: #f1f5fc;
+  border-left: 5px solid #1c47a3;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="Logoo.jpg" alt="Logo Dentista Big Mouth" class="logo">
+  <h1>Dentista Big Mouth</h1>
+  <p> Aquí atendemos hasta a los dragones 🔥</p>
+</header>
+
+<section>
+<nav>
+  <ol>
+    <li>
+      <button class="button1"><a href="RegistrosPacientes.html" style="text-decoration: none; color: inherit;">Regresar a tabla de registros</a></button>
+    </li>
+  </ol>
+</nav>
+
+  <article>
+    <p>Completa los campos para añadir un nuevo documento a la colección:</p>
+
+    <form onsubmit="event.preventDefault(); agregarpacientes();">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+
+        <div>
+          <label>ID </label>
+          <input type="text" id="ID" name="id_paciente" placeholder="ej. 011" required>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Nombre </label>
+          <input type="text" id="Nombre" name="nombre" placeholder="Nombre completo" required>
+        </div>
+
+        <div>
+          <label>Edad </label>
+          <input type="text" id="Edad" name="edad" placeholder="ej. 25" required>
+        </div>
+
+        <div>
+          <label>Genero</label>
+          <select id="Genero" name="genero" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Teléfono </label>  
+          <input type="tel" id="Telefono" name="telefono" placeholder="ej. 614-1234" required>
+        </div>
+
+        <div>
+          <label>Correo </label>
+          <input type="email" id="Correo" name="correo" placeholder="ej. paciente@correo.com" required>
+        </div>
+
+        <div>
+          <label>RFC</label>
+          <input type="text" id="RFC" name="rfc" placeholder="ej. ABCD123456XYZ" style="text-transform: uppercase;" required>
+        </div>
+
+        <div>
+          <label>Contacto Emergencia </label>
+          <input type="text" id="Contactemeg" name="contactemeg" placeholder="Contacto de emergencia" required>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Alergias </label>
+          <input type="text" id="Alergias" name="alergias" placeholder="ej. Penicilina, Ninguna" required>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Antecedentes </label>
+          <input type="text" id="Antecedentes" name="antecedentes" placeholder="ej. Diabetes, Asma" required>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Nota </label>
+          <textarea id="Nota" name="nota" placeholder="Observaciones clínicas..." required></textarea>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <button type="submit">Guardar Registro de Paciente</button>
+        </div>
+
+      </div>
+    </form>
+
+    <div id="listapacientes" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;"></div>
+  </article>
+</section>
+
+<script>
+  async function agregarpacientes(){
+    let ID = document.getElementById("ID").value;
+    let Telefono = document.getElementById("Telefono").value;
+    let Contactemeg = document.getElementById("Contactemeg").value;
+    let Correo = document.getElementById("Correo").value;
+    let Alergias = document.getElementById("Alergias").value;
+    let Antecedentes = document.getElementById("Antecedentes").value;
+    let Nota = document.getElementById("Nota").value;
+    let Nombre = document.getElementById("Nombre").value;
+    let Edad = document.getElementById("Edad").value;
+    let Genero = document.getElementById("Genero").value;
+    let RFC = document.getElementById("RFC").value;
+
+    if(
+        ID === "" || Telefono === "" || Contactemeg === "" || Correo === "" ||
+        Alergias === "" || Antecedentes === "" || Nota === "" ||
+        Nombre === "" || Edad === "" || Genero === "" || RFC === ""
+    ){
+        alert("Por favor llene todos los campos");
+        return;
+    }
+
+    const datospacientes = {
+        ID,
+        Telefono,
+        Contactemeg,
+        Correo,
+        Alergias,
+        Antecedentes,
+        Nota,
+        Nombre,
+        Edad,
+        Genero,
+        RFC
+    };
+
+    try {
+        const respuesta = await fetch('http://localhost:5000/api/pacientes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datospacientes)
+        });
+        
+        const resultado = await respuesta.json();
+
+        if (respuesta.ok) {
+            let nuevaCard = document.createElement('div');
+            nuevaCard.classList.add('card');
+            nuevaCard.style = "border-left: 5px solid #5f016b; padding: 15px; background: #f7f4f9; border-radius: 6px;";
+          
+            nuevaCard.innerHTML = `
+            <h2 style="margin-top:0; color:#5f016b;">${Nombre}</h2>
+            <p><strong>ID:</strong> ${ID}</p>
+            <p><strong>Teléfono:</strong> ${Telefono}</p>
+            <p><strong>Contacto Emergencia:</strong> ${Contactemeg}</p>
+            <p><strong>Correo:</strong> ${Correo}</p>
+            <p><strong>Alergias:</strong> ${Alergias}</p>
+            <p><strong>Antecedentes:</strong> ${Antecedentes}</p>
+            <p><strong>Nota:</strong> ${Nota}</p>
+            <p><strong>Edad:</strong> ${Edad}</p>
+            <p><strong>Género:</strong> ${Genero}</p>
+            <p><strong>RFC:</strong> ${RFC}</p>
+            `;
+    
+            document.getElementById("listapacientes").appendChild(nuevaCard);
+
+            document.getElementById("ID").value = "";
+            document.getElementById("Telefono").value = "";
+            document.getElementById("Contactemeg").value = "";
+            document.getElementById("Correo").value = "";
+            document.getElementById("Alergias").value = "";
+            document.getElementById("Antecedentes").value = "";
+            document.getElementById("Nota").value = "";
+            document.getElementById("Nombre").value = "";
+            document.getElementById("Edad").value = "";
+            document.getElementById("Genero").value = "";
+            document.getElementById("RFC").value = "";
+
+            alert("✅ " + resultado.mensaje);
+        } else {
+            alert("No se pudo guardar el paciente: " + (resultado.error || "Error desconocido"));
+        }
+    } catch (error) {
+        console.error("Error al guardar el paciente:", error);
+        alert("❌ No se pudo conectar con el servidor backend. ¿Está encendido en el puerto 5000?");
+    }
+  }
+</script>
+
+<footer>
+  <p>  | Muñiz Garcia Manuel Hector 4-I |  </p> 
+  <p> | Num control: 0601  |  </p>
+  <p> | 4to semestre - Programacion |  </p> 
+  <p> | Bases de Datos No Relacionales |  </p>
+</footer>
+
+</body>
+</html>
