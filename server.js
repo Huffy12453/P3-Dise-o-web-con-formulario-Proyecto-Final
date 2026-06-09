@@ -24,11 +24,10 @@ const pacientesSchema = new mongoose.Schema({
     ID: String, Telefono: String, Contactemeg: String, Correo: String,
     Alergias: String, Antecedentes: String, Nota: String, Nombre: String,
     Edad: String, Genero: String, RFC: String
-}, { versionKey: false, strict: false }); // 👈 MODIFICADO: Guarda cualquier propiedad
+}, { versionKey: false, strict: false });
 const Paciente = mongoose.model('pacientes', pacientesSchema);
 
 const dentistaSchema = new mongoose.Schema({
-    // CAMBIA ESTO: Asegúrate de que IDentista e ID sean String, NO Number
     IDentista: { type: String }, 
     ID: { type: String },
     Nombre: String,
@@ -39,15 +38,15 @@ const dentistaSchema = new mongoose.Schema({
     DiasLaborales: String,
     Telefono: String
 }, { 
-    strict: false, // Esto permite que si hay variaciones de mayúsculas en Atlas, no se bloquee
-    collection: 'dentistas' // Asegúrate de que se llame igual que tu colección en Atlas
+    strict: false,
+    collection: 'dentistas'
 });
 const Dentista = mongoose.model('dentistas', dentistaSchema);
 
 const citasSchema = new mongoose.Schema({
     IDcitas: String, Fecha: String, IDentista: String, Estatus: String,
     IDPaciente: String, Motivo: String
-}, { versionKey: false, strict: false }); // 👈 MODIFICADO: Evita filtros restrictivos en citas
+}, { versionKey: false, strict: false }); 
 const Cita = mongoose.model('citas', citasSchema); 
 
 app.post('/api/pacientes', async (req, res) => {
@@ -133,7 +132,7 @@ app.put('/api/dentistas/:id', async (req, res) => {
     try {
         const idBuscado = String(req.params.id).trim();
 
-        // Buscamos directamente usando las llaves exactas que tienes en MongoDB Atlas
+ 
         const actualizado = await Dentista.findOneAndUpdate(
             { 
                 $or: [
