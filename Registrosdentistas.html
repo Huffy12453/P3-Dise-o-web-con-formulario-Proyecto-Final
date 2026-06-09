@@ -87,7 +87,7 @@
       
       dentistasCargados = await respuesta.json();
       const tbody = document.getElementById("tablaDentistasBody");
-      
+
       tbody.innerHTML = "";
 
       dentistasCargados.forEach(doctor => {
@@ -179,17 +179,16 @@
   }
 
   async function guardarCambiosDentista(id) {
-      const vNombre = document.getElementById(`edit-nombre-${id}`).value;
-      const vGenero = document.getElementById(`edit-genero-${id}`).value;
-      const vCep = document.getElementById(`edit-cep-${id}`).value;
-      const vEspecialidad = document.getElementById(`edit-especialidad-${id}`).value;
-      const vHorario = document.getElementById(`edit-horario-${id}`).value;
-      const vDias = document.getElementById(`edit-dias-${id}`).value;
-      const vTelefono = document.getElementById(`edit-telefono-${id}`).value;
+      const Nombre = document.getElementById(`edit-nombre-${id}`).value;
+      const Genero = document.getElementById(`edit-genero-${id}`).value;
+      const CEP = document.getElementById(`edit-cep-${id}`).value;
+      const Especialidad = document.getElementById(`edit-especialidad-${id}`).value;
+      const Horario = document.getElementById(`edit-horario-${id}`).value;
+      const DiasLaborales = document.getElementById(`edit-dias-${id}`).value;
+      const Telefono = document.getElementById(`edit-telefono-${id}`).value;
 
       const datosActualizados = {
-          Nombre: vNombre, Genero: vGenero, CEP: vCep, Especialidad: vEspecialidad, Horario: vHorario, DiasLaborales: vDias, Telefono: vTelefono,
-          nombre: vNombre, genero: vGenero, cep: vCep, especialidad: vEspecialidad, horario: vHorario, diaslaborales: vDias, telefono: vTelefono
+          Nombre, Genero, CEP, Especialidad, Horario, DiasLaborales, Telefono
       };
 
       try {
